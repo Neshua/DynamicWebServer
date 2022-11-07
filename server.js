@@ -30,11 +30,11 @@ app.use(express.static(public_dir));
 
 // GET request handler for home page '/' (redirect to desired route)
 app.get('/', (req, res) => {
-    let home = ''; // <-- change this
+    let home = ''; //
     res.redirect(home);
 });
 
-/*
+
 // Example GET request handler for data about a specific year
 app.get('/year/:selected_year', (req, res) => {
     console.log(req.params.selected_year);
@@ -45,7 +45,7 @@ app.get('/year/:selected_year', (req, res) => {
         res.status(200).type('html').send(template); // <-- you may need to change this
     });
 });
-*/
+
 
 
 
