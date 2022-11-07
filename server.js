@@ -38,6 +38,28 @@ app.get('/', (req, res) => {
 // Example GET request handler for data about a specific year
 app.get('/year/:selected_year', (req, res) => {
     console.log(req.params.selected_year);
+    fs.readFile(path.join(template_dir, 'births_template.html'), (err, template) => {
+        // modify `template` and send response
+        // this will require a query to the SQL database
+
+        res.status(200).type('html').send(template); // <-- you may need to change this
+    });
+});
+
+// Example GET request handler for data about a specific year
+app.get('/month/:selected_month', (req, res) => {
+    console.log(req.params.selected_month);
+    fs.readFile(path.join(template_dir, 'month.html'), (err, template) => {
+        // modify `template` and send response
+        // this will require a query to the SQL database
+
+        res.status(200).type('html').send(template); // <-- you may need to change this
+    });
+});
+
+// Example GET request handler for data about a specific year
+app.get('/day/:selected_day', (req, res) => {
+    console.log(req.params.selected_day);
     fs.readFile(path.join(template_dir, 'year.html'), (err, template) => {
         // modify `template` and send response
         // this will require a query to the SQL database
