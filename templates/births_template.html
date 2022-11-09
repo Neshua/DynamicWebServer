@@ -4,32 +4,60 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>US Births</title>
-    <link rel="stylesheet" href="public/css/style.css">
-	<link rel="stylesheet" href="public/css/foundation.css">
+    <link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/foundation.css">
+	<script type="application/javascript">
+		function ChangePageNext() {
+			let year = 0;
+			if (window.location.pathname.includes('year')) {
+				year = parseInt(window.location.pathname.substring(6, 10));
+				year += 1;
+				if (year === 2015) {
+					year = 2000;
+				}
+			}
+			window.location.href = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/year/" + year;
+		}
+		function ChangePagePrev() {
+			let year = 0;
+			if (window.location.pathname.includes('year')) {
+				year = parseInt(window.location.pathname.substring(6, 10));
+				year -= 1;
+				if (year === 1999) {
+					year = 2014;
+				}
+			}
+			window.location.href = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/year/" + year;
+		}
+	</script>
 </head>
 <body>
-	<div class = "header"> US Births Per State </div>
+	<div class = "header"> US Births</div>
 	<div id = "content">
-		<h1 id = "month">%%MONTH%%</h1>
-		<h2 id = "year"> %%YEAR%% </h1>
+		<h1 id = "Title">%%TITLE%%</h1>
+		<h2 id = "year"> %%YEAR%% </h2>
 		<div class="table-scroll">
 			<table class ="hover">
 				<thead>
-					<tr>
-						<th>Date of the Month</th>
-						<th>Day of the Week</th>
-						<th>Number of Births</th>
-					</tr>
+<!--					<tr>-->
+<!--						<th>Date of the Month</th>-->
+<!--						<th>Day of the Week</th>-->
+<!--						<th>Number of Births</th>-->
+<!--					</tr>-->
 				</thead>
 				<tbody>
-					%%BIRTHINFO%%
+					%%BIRTH_INFO%%
+<!--					<script src="node_modules/chart.js/dist/chart.js"></script>-->
+<!--					%%CHART_INFO%%-->
 				</tbody>
 				
 			</table>
-		</div> 
-	</div>  
+		</div>
+			<a onclick="ChangePagePrev()" id="previous">&raquo;Previous</a>
+			<a onclick="ChangePageNext()" id="next">Next &raquo;</a>
+		<canvas id="myChart" width="400" height="400"></canvas>
+	</div>
 
-	<canvas id="myChart" width="400" height="400"></canvas>
 
 </body>
 

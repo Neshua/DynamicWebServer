@@ -1,6 +1,10 @@
 // Built-in Node.js modules
 let fs = require('fs');
 let path = require('path');
+// const Chart = require('chart.js');
+// const myChart = new Chart(ctx, {...});
+// import Chart from 'chart.js/auto';
+
 
 // NPM modules
 let express = require('express');
@@ -30,19 +34,42 @@ app.use(express.static(public_dir));
 
 // GET request handler for home page '/' (redirect to desired route)
 app.get('/', (req, res) => {
-    let home = ''; //
+    let home = '/year/2000'; //chnages this
     res.redirect(home);
 });
 
 
+
 // Example GET request handler for data about a specific year
 app.get('/year/:selected_year', (req, res) => {
-    console.log(req.params.selected_year);
+    let year = req.params.selected_year;
     fs.readFile(path.join(template_dir, 'births_template.html'), (err, template) => {
-        // modify `template` and send response
-        // this will require a query to the SQL database
-
-        res.status(200).type('html').send(template); // <-- you may need to change this
+        let query = "SELECT * FROM Births WHERE Births.year = ?";
+        db.all(query, [year], (err, rows) => {
+            let response = template.toString();
+            response = response.replace('%%TITLE%%', "Data of every month for year:");
+            response = response.replace('%%YEAR%%', year);
+            let month = 1;
+            let birth_number = 0;
+            let birth_data = "";
+            for(let i = 0; i < rows.length; i++){
+                if (i === (rows.length-1) || rows[i].monthNum !== month) {
+                    if(i === rows.length-1) {
+                        birth_number += rows[i].births;
+                    }
+                    birth_data += "<tr>";
+                    birth_data += "<td>" + rows[i-1].monthNum + "</td>";
+                    birth_data += "<td>" + birth_number + "</td>";
+                    birth_data += "</tr>";
+                    birth_number = rows[i].births;
+                    month++;
+                } else {
+                    birth_number += rows[i].births;
+                }
+            }
+            response = response.replace("%%BIRTH_INFO%%", birth_data);
+            res.status(200).type('html').send(response);
+        });
     });
 });
 
