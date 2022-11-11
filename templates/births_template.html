@@ -33,7 +33,13 @@
 	</script>
 </head>
 <body>
-	<div class = "header"> US Births</div>
+	<div class = "header"> US Births
+		<div>
+			<a href="http://localhost:8000/year/2002">Filter by Year</a>
+			<a href="http://localhost:8000/year/2003">Filter by Month</a>
+			<a href="http://localhost:8000/year/2004">Filter by Day</a>
+		</div>
+	</div>
 	<a onclick="ChangePagePrev()" id="previous">&raquo;Previous</a>
 	<a onclick="ChangePageNext()" id="next">Next &raquo;</a>
 	<div id = "content">
@@ -42,6 +48,7 @@
 		<div class="table-scroll">
 			<table class ="hover">
 				<thead>
+					%%TABLE_HEADER%%
 <!--					<tr>-->
 <!--						<th>Date of the Month</th>-->
 <!--						<th>Day of the Week</th>-->
@@ -50,23 +57,19 @@
 				</thead>
 				<tbody>
 					%%BIRTH_INFO%%
-<!--					<script src="node_modules/chart.js/dist/chart.js"></script>-->
-<!--					%%CHART_INFO%%-->
-
 				</tbody>
 				
 			</table>
 			<canvas id="myChart" width="400" height="400"></canvas>
 			<script>
 				const ctx = document.getElementById('myChart').getContext('2d');
-				const xlabels = [];
 				const myChart = new Chart(ctx, {
 					type: 'bar',
 					data: {
-						labels: xlabels,
+						labels: [%%label_list%%],
 						datasets: [{
 							label: '# of births',
-							data: [12, 19, 3, 5, 2, 3],
+							data: [%%data_list%%],
 							backgroundColor: [
 								'rgba(255, 99, 132, 0.2)',
 								'rgba(54, 162, 235, 0.2)',

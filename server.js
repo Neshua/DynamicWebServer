@@ -53,11 +53,15 @@ app.get('/year/:selected_year', (req, res) => {
             let month = 1;
             let birth_number = 0;
             let birth_data = "";
+            let xlabels = "";
+            let data = "";
             for(let i = 0; i < rows.length; i++){
-                //xlabels.push(month.toString());
                 if (i === (rows.length-1) || rows[i].monthNum !== month) {
                     if(i === rows.length-1) {
+                        xlabels += month.toString();
                         birth_number += rows[i].births;
+                    } else {
+                        xlabels += month.toString() + ",";
                     }
                     birth_data += "<tr>";
                     birth_data += "<td>" + rows[i-1].monthNum + "</td>";
@@ -69,6 +73,7 @@ app.get('/year/:selected_year', (req, res) => {
                     birth_number += rows[i].births;
                 }
             }
+            response = response.replace("%%label_list%%", xlabels);
             response = response.replace("%%BIRTH_INFO%%", birth_data);
             if(rows.length > 0) {
                 res.status(200).type('html').send(response);
