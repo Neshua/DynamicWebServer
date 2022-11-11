@@ -108,10 +108,13 @@ app.get('/month/:selected_month', (req, res) => {
 
 // outputs the amount of births for that day (ex. sum of all tuesday births in 2002) throughout all 14 years.
 app.get('/day/:selected_day', (req, res) => {
+    let day = req.params.selected_day.toString().toLowerCase();
     console.log(req.params.selected_day);
     fs.readFile(path.join(template_dir, 'births_template.html'), (err, template) => {
-        // modify `template` and send response
-        // this will require a query to the SQL database
+        let query = "SELECT * FROM Births INNER JOIN DayOfWeek ON Births.day = DayOfWeek.day WHERE DayOfWeek.name = ?";
+        db.all(query, [day], (err, rows) => {
+            console.log(rows);
+        });
 
         res.status(200).type('html').send(template); // <-- you may need to change this
     });
