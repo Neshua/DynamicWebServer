@@ -86,19 +86,24 @@ app.get('/year/:selected_year', (req, res) => {
 
 // outputs the amount of births in that month throughout the 14 years
 app.get('/month/:selected_month', (req, res) => {
+    let month = req.params.selected_month;
     console.log(req.params.selected_month);
-    fs.readFile(path.join(template_dir, 'month.html'), (err, template) => {
-        // modify `template` and send response
-        // this will require a query to the SQL database
+    fs.readFile(path.join(template_dir, 'births_template.html'), (err, template) => {
+        let queryMonth = "SELECT * FROM Births WHERE Births.month = ?";
+        db.all(query, [year], (err, rows) => {
+            let response = template.toString();
+            response = response.replace('%%TITLE%%', 'Sum of all US births in' + month +  ' from 2000-2014');
+            response = response.replace('%%%MONTH%')         
 
-        res.status(200).type('html').send(template); // <-- you may need to change this
+        
+        });
     });
 });
 
 // outputs the amount of births for that day (ex. sum of all tuesday births in 2002) throughout all 14 years.
 app.get('/day/:selected_day', (req, res) => {
     console.log(req.params.selected_day);
-    fs.readFile(path.join(template_dir, 'year.html'), (err, template) => {
+    fs.readFile(path.join(template_dir, 'births_template.html'), (err, template) => {
         // modify `template` and send response
         // this will require a query to the SQL database
 
