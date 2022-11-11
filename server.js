@@ -34,7 +34,8 @@ app.use(express.static(public_dir));
 
 // GET request handler for home page '/' (redirect to desired route)
 app.get('/', (req, res) => {
-    let home = '/year/2000'; //chnages this
+    //if request does not equal or contain --> submit 404
+    let home = '/year/2000';
     res.redirect(home);
 });
 
@@ -68,7 +69,11 @@ app.get('/year/:selected_year', (req, res) => {
                 }
             }
             response = response.replace("%%BIRTH_INFO%%", birth_data);
-            res.status(200).type('html').send(response);
+            if(rows.length > 0) {
+                res.status(200).type('html').send(response);
+            } else {
+                res.status(404).type('text').send("ERROR: No data for year "+ year);
+            }
         });
     });
 });
