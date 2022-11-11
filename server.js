@@ -55,12 +55,15 @@ app.get('/year/:selected_year', (req, res) => {
             let birth_data = "";
             let xlabels = "";
             let data = "";
+            let table_head = "";
             for(let i = 0; i < rows.length; i++){
                 if (i === (rows.length-1) || rows[i].monthNum !== month) {
                     if(i === rows.length-1) {
                         xlabels += month.toString();
                         birth_number += rows[i].births;
+                        data += birth_number.toString();
                     } else {
+                        data += birth_number.toString() + ',';
                         xlabels += month.toString() + ",";
                     }
                     birth_data += "<tr>";
@@ -73,6 +76,9 @@ app.get('/year/:selected_year', (req, res) => {
                     birth_number += rows[i].births;
                 }
             }
+            table_head = "<tr>"+ "<th>" +"Month Number of the Year"+"</th>"+ "<th>" +"Sum of Births"+"</th>" + "</tr>";
+            response = response.replace("%%TABLE_HEADER%%", table_head);
+            response = response.replace("%%data_list%%", data);
             response = response.replace("%%label_list%%", xlabels);
             response = response.replace("%%BIRTH_INFO%%", birth_data);
             if(rows.length > 0) {
