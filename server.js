@@ -54,6 +54,7 @@ app.get('/year/:selected_year', (req, res) => {
             let birth_number = 0;
             let birth_data = "";
             for(let i = 0; i < rows.length; i++){
+                //xlabels.push(month.toString());
                 if (i === (rows.length-1) || rows[i].monthNum !== month) {
                     if(i === rows.length-1) {
                         birth_number += rows[i].births;
