@@ -67,7 +67,7 @@ app.get('/year/:selected_year', (req, res) => {
                         xlabels += month.toString() + ",";
                     }
                     birth_data += "<tr>";
-                    birth_data += "<td>" + rows[i-1].monthNum + "</td>";
+                    birth_data += "<td>" + month + "</td>";
                     birth_data += "<td>" + birth_number + "</td>";
                     birth_data += "</tr>";
                     birth_number = rows[i].births;
@@ -108,15 +108,52 @@ app.get('/month/:selected_month', (req, res) => {
 
 // outputs the amount of births for that day (ex. sum of all tuesday births in 2002) throughout all 14 years.
 app.get('/day/:selected_day', (req, res) => {
-    let day = req.params.selected_day.toString().toLowerCase();
-    console.log(req.params.selected_day);
+    let day = req.params.selected_day.toString();
+    day = day[0].toUpperCase() + day.substring(1, day.length);
     fs.readFile(path.join(template_dir, 'births_template.html'), (err, template) => {
         let query = "SELECT * FROM Births INNER JOIN DayOfWeek ON Births.day = DayOfWeek.day WHERE DayOfWeek.name = ?";
         db.all(query, [day], (err, rows) => {
-            console.log(rows);
+            //console.log(rows);
+            let response = template.toString();
+            response = response.replace('%%TITLE%%', "Sum of births on:");
+            response = response.replace('%%YEAR%%', day + "'s from 2000-2014");
+            let birth_number = 0;
+            let year = 2000;
+            let birth_data = "";
+            let xlabels = "";
+            let data = "";
+            let table_head = "";
+            for(let i = 0; i < rows.length; i++){
+                if (i === (rows.length-1) || rows[i].year !== year) {
+                    if(i === rows.length-1) {
+                        xlabels += year.toString();
+                        birth_number += rows[i].births;
+                        data += birth_number.toString();
+                    } else {
+                        data += birth_number.toString() + ',';
+                        xlabels += year.toString() + ",";
+                    }
+                    birth_data += "<tr>";
+                    birth_data += "<td>" + year + "</td>";
+                    birth_data += "<td>" + birth_number + "</td>";
+                    birth_data += "</tr>";
+                    birth_number = rows[i].births;
+                    year++;
+                } else {
+                    birth_number += rows[i].births;
+                }
+            }
+            table_head = "<tr>"+ "<th>" +"Year"+"</th>"+ "<th>" +"Sum of Births"+"</th>" + "</tr>";
+            response = response.replace("%%TABLE_HEADER%%", table_head);
+            response = response.replace("%%data_list%%", data);
+            response = response.replace("%%label_list%%", xlabels);
+            response = response.replace("%%BIRTH_INFO%%", birth_data);
+            if(rows.length > 0) {
+                res.status(200).type('html').send(response);
+            } else {
+                res.status(404).type('text').send("ERROR: No data for day "+ day);
+            }
         });
-
-        res.status(200).type('html').send(template); // <-- you may need to change this
     });
 });
 

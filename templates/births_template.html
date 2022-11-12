@@ -10,25 +10,46 @@
 	<script type="application/javascript">
 		function ChangePageNext() {
 			let year = 0;
+			let day = "";
+			let week = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 			if (window.location.pathname.includes('year')) {
 				year = parseInt(window.location.pathname.substring(6, 10));
 				year += 1;
 				if (year === 2015) {
 					year = 2000;
 				}
+				window.location.href = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/year/" + year;
 			}
-			window.location.href = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/year/" + year;
+			if (window.location.pathname.includes('day')) {
+				day = window.location.pathname.substring(5, window.location.pathname.length);
+				console.log(day);
+				let index = week.indexOf(day.toString()) + 1;
+				if (index === week.length) {
+					index = 0;
+				}
+				window.location.href = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/day/" + week[index];
+			}
 		}
 		function ChangePagePrev() {
 			let year = 0;
+			let day = "";
+			let week = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 			if (window.location.pathname.includes('year')) {
 				year = parseInt(window.location.pathname.substring(6, 10));
 				year -= 1;
 				if (year === 1999) {
 					year = 2014;
 				}
+				window.location.href = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/year/" + year;
 			}
-			window.location.href = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/year/" + year;
+			if (window.location.pathname.includes('day')) {
+				day = window.location.pathname.substring(5, window.location.pathname.length);
+				let index = week.indexOf(day.toString()) - 1;
+				if (index < 0) {
+					index = 6;
+				}
+				window.location.href = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/day/" + week[index];
+			}
 		}
 	</script>
 </head>
@@ -37,7 +58,7 @@
 		<div>
 			<a href="http://localhost:8000/year/2002">Filter by Year</a>
 			<a href="http://localhost:8000/year/2003">Filter by Month</a>
-			<a href="http://localhost:8000/year/2004">Filter by Day</a>
+			<a href="http://localhost:8000/day/monday">Filter by Day</a>
 		</div>
 	</div>
 	<a onclick="ChangePagePrev()" id="previous">&raquo;Previous</a>
