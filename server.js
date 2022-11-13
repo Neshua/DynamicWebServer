@@ -8,7 +8,7 @@ let path = require('path');
 
 // NPM modules
 let express = require('express');
-let sqlite3 = require('sqlite3');
+let sqlite3 = require('sqlite3').verbose();
 
 
 let public_dir = path.join(__dirname, 'public');
@@ -76,7 +76,7 @@ app.get('/year/:selected_year', (req, res) => {
                     birth_number += rows[i].births;
                 }
             }
-            table_head = "<tr>"+ "<th>" +"Month Number of the Year"+"</th>"+ "<th>" +"Sum of Births"+"</th>" + "</tr>";
+            table_head = "<tr>"+ "<th>" +"Month Number"+"</th>"+ "<th>" +"Sum of Births"+"</th>" + "</tr>";
             response = response.replace("%%MFR_IMAGE%%", "/images/" + "year.png");
             response = response.replace("%%TABLE_HEADER%%", table_head);
             response = response.replace("%%data_list%%", data);
@@ -91,17 +91,57 @@ app.get('/year/:selected_year', (req, res) => {
     });
 });
 
-// outputs the amount of births in that month throughout the 14 years
+// outputs the amount of births in that month throughout the 14 years (ex april in 2000-2014)
 app.get('/month/:selected_month', (req, res) => {
-    let month = req.params.selected_month;
-    console.log(req.params.selected_month);
+    let month = req.params.selected_month.toLowerCase();
+    let monthList = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"];
+    let month_number = monthList.indexOf(month) + 1;
+    console.log(month);
+    console.log(month_number);
+    
     fs.readFile(path.join(template_dir, 'births_template.html'), (err, template) => {
         let queryMonth = "SELECT * FROM Births WHERE Births.month = ?";
-        db.all(query, [year], (err, rows) => {
+        db.all(queryMonth, [month_number], (err, rows) => {
             let response = template.toString();
-            response = response.replace('%%TITLE%%', 'Sum of all US births in' + month +  ' from 2000-2014');
-            response = response.replace('%%%MONTH%')         
-
+            response = response.replace('%%TITLE%%', 'Sum of all US births in');
+            response = response.replace('%%%YEAR%','' + month +  ' from 2000-2014');
+            let birth_number = 0;
+            let year = 2000;
+            let birth_data = "";
+            let xlabels = "";
+            let data = "";
+            let table_head = "";
+            for(let i = 0; i < rows.length; i++){
+                if (i === (rows.length-1) || rows[i].year !== year) {
+                    if(i === rows.length-1) {
+                        xlabels += month.toString();
+                        birth_number += rows[i].births;
+                        data += birth_number.toString();
+                    } else {
+                        data += birth_number.toString() + ',';
+                        xlabels += year.toString() + ",";
+                    }
+                    birth_data += "<tr>";
+                    birth_data += "<td>" + year + "</td>";
+                    birth_data += "<td>" + birth_number + "</td>";
+                    birth_data += "</tr>";
+                    birth_number = rows[i].births;
+                    year++;
+                } else {
+                    birth_number += rows[i].births;
+                }
+            }
+            table_head = "<tr>"+ "<th>" +"Year"+"</th>"+ "<th>" +"Sum of Births"+"</th>" + "</tr>";
+            response = response.replace("%%MFR_IMAGE%%", "/images/" + "month.png");
+            response = response.replace("%%TABLE_HEADER%%", table_head);
+            response = response.replace("%%data_list%%", data);
+            response = response.replace("%%label_list%%", xlabels);
+            response = response.replace("%%BIRTH_INFO%%", birth_data);
+            if(rows.length > 0) {
+                res.status(200).type('html').send(response);
+            } else {
+                res.status(404).type('text').send("ERROR: No data for day "+ month);
+            }
         
         });
     });
