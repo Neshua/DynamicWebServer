@@ -1,6 +1,31 @@
 {
+  "name": "DynamicWebServer",
+  "version": "0.0.0",
+  "description": "Dynamic Web Server using Node JS",
+  "author": {
+      "name": "Neshua Aguilar",
+      "email": "naguilar@macalester.edu"
+  },
+  "contributors": [
+      {
+          "name": "Sam Mcenery, Macknzie McClellan",
+          "email": "sam.mcenery@stthomas.edu, mackenzie.mcclellan@stthomas.edu"
+          
+      }
+  ],
+  "main": "server.js",
+  "repository": {
+      "type": "git",
+      "url": "https://github.com/Neshua/DynamicWebServer.git"
+  },
   "dependencies": {
-    "express": "^4.18.2",
-    "sqlite3": "^5.1.2"
+      "chart.js": "^3.9.1",
+      "ex": "^0.1.4",
+      "express": "^4.18.2",
+      "node": "^19.0.1",
+      "package.json": "^2.0.1",
+      "server": "^1.0.37",
+      "sqlite": "^4.1.2",
+      "sqlite3": "^5.1.2"
   }
 }
