@@ -1,53 +1,178 @@
-* {
-    margin: 0 auto;
-}
-a {
-    text-decoration: none;
-    display: inline-block;
-    padding: 8px 16px;
-}
-
-a:hover {
-    background-color: #ddd;
-    color: black;
-}
-.next {
-    background-color: #04AA6D;
-    color: white;
-}
+/* * {
+   margin: 0 auto;
+} */
+ 
 tr {
     border: solid 1px #666666;
-}
-th {
+ }
+ th {
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     font-size: 1rem;
     font-weight: bold;
     border: solid 1px #666666;
     width: 6rem;
     text-align: center;
-}
-
-td {
+ }
+  
+ td {
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     font-size: 1rem;
     font-weight: normal;
     border: solid 1px #666666;
     width: 6rem;
     text-align: right;
-}
-
-#content{
+ }
+  
+#tablecontent{
     width: 1000px;
-    background-color: beige;
+    background-color: #048BA8;
+    margin-left: 50px;
+    /* margin-right: 50px; */
 
-}
-
+ }
+  
 .header{
     font-weight: bold;
     padding: 2rem;
     text-align: center;
-    background: #4f6d7a;
-    color: beige;
+    background: #2E4047;
+    color: rgb(255, 255, 255);
     font-size: 3rem;
 }
+  
+.button:hover {
+    background-color: gray;
+    color: white;
+}
+  
+.button:active {
+    background-color: #3e8e41;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}
 
+#yearFilter{
+    display: inline-block;
+    padding: 15px 25px;
+    font-size: 24px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: #ffffff;
+    background-color: gray;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px #999;
+ 
+}
+
+#prevButton{
+    display: inline-block;
+    padding: 15px 25px;
+    font-size: 24px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    background-color: #F18F01;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px #999;
+}
+
+#monthFilter{
+    display: inline-block;
+    padding: 15px 25px;
+    font-size: 24px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: #ffffff;
+    background-color: gray;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px #999;
+ 
+}
+
+#dayFilter{
+    display: inline-block;
+    padding: 15px 25px;
+    font-size: 24px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: #ffffff;
+    background-color: gray;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px #999;
+ 
+}
+#nextButton{
+    display: inline-block;
+    padding: 15px 25px;
+    font-size: 24px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    background-color: #F18F01;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px #999;
+}
+
+div{
+    text-align: center;
+}
+
+#mychart{
+    background-color: #999;
+}
+
+#title{
+    font-weight: normal;
+    padding: 1rem;
+    text-align: center;
+    color: rgb(255, 255, 255);
+    font-size: 2rem; 
+}
+
+#year{
+    font-weight: bolder;
+    padding: 1rem;
+    text-align: center;
+    color: rgb(255, 255, 255);
+    font-size: 2.3rem;
+}
+
+#divider {
+    width: 100%;
+    text-align: center;
+    margin-left: 0;
+    height: 1rem;
+    background-color: #F18F01;
+    color: #F18F01;
+}
+ 
+.box {
+    width: 550px;
+    height: 550px;
+    background: #d9dbda;
+    margin: 20px 50px;
+    }
+    .inner-border {
+    border: 20px solid #d9dbda;
+    box-shadow: inset 0px 0px 0px 10px #969696;
+    box-sizing: border-box;
+    }
+    .inner-outline {
+    outline: 10px solid #048BA8;
+    outline-offset: 20px;
+    }

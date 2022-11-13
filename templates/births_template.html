@@ -8,7 +8,7 @@
 	<link rel="stylesheet" href="/css/foundation.css">
 	<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
 	<script type="application/javascript">
-		function ChangePageNext() {
+			function ChangePageNext() {
 			let year = 0;
 			let day = "";
 			let week = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
@@ -73,73 +73,116 @@
 				window.location.href = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/month/" + monthList[index];
 			}
 		}
+
+
+		function redirectYearFilter(){
+			var url ="http://localhost:8000/year/2000";
+    		window.location.href = url;
+		}
+
+		function redirectMonthFilter(){
+			var url ="http://localhost:8000/month/april";
+    		window.location.href = url;
+		}
+
+		function redirectDayFilter(){
+			var url ="http://localhost:8000/day/monday";
+    		window.location.href = url;
+			if (window.location.pathname.includes('month')) {
+				monthName = window.location.pathname.substring(7, window.location.pathname.length);
+				monthName = monthName.toLowerCase();
+				let index = monthList.indexOf(monthName) - 1;
+				if (index < 0) {
+					index = 11;
+				}
+				window.location.href = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/month/" + monthList[index];
+			}
+		}
 	</script>
 </head>
 <body>
-	<div class = "header"> US Births
+	
+	<div class = "header"> US Births	
+		
 		<div>
-			<a href="http://localhost:8000/year/2000">Filter by Year</a>
-			<a href="http://localhost:8000/month/january">Filter by Month</a>
-			<a href="http://localhost:8000/day/monday">Filter by Day</a>
+			<button id="yearFilter" onclick="redirectYearFilter()" class="button" > Filter By Year </button>
+			<button id="monthFilter" onclick="redirectMonthFilter()" class="button " > Filter By Month </button>
+			<button id="dayFilter" onclick="redirectDayFilter()" class="button" > Filter By Day </button>
 		</div>
 	</div>
-	<a onclick="ChangePagePrev()" id="previous">&raquo;Previous</a>
-	<a onclick="ChangePageNext()" id="next">Next &raquo;</a>
-	<div id = "content">
-		<img id="img" src="%%MFR_IMAGE%%" alt="%%MFR_ALT_TEXT%%" width="500"/>
-		<h1 id = "Title">%%TITLE%%</h1>
-		<h2 id = "year"> %%YEAR%% </h2>
-		<div class="table-scroll">
-			<table class ="hover">
-				<thead>
-					%%TABLE_HEADER%%
-				</thead>
-				<tbody>
-					%%BIRTH_INFO%%
-				</tbody>
-				
-			</table>
-			<canvas id="myChart" width="400" height="400"></canvas>
-			<script>
-				const ctx = document.getElementById('myChart').getContext('2d');
-				const myChart = new Chart(ctx, {
-					type: 'bar',
-					data: {
-						labels: [%%label_list%%],
-						datasets: [{
-							label: '# of US births',
-							data: [%%data_list%%],
-							backgroundColor: [
-								'rgba(255, 99, 132, 0.2)',
-								'rgba(54, 162, 235, 0.2)',
-								'rgba(255, 206, 86, 0.2)',
-								'rgba(75, 192, 192, 0.2)',
-								'rgba(153, 102, 255, 0.2)',
-								'rgba(255, 159, 64, 0.2)'
-							],
-							borderColor: [
-								'rgba(255, 99, 132, 1)',
-								'rgba(54, 162, 235, 1)',
-								'rgba(255, 206, 86, 1)',
-								'rgba(75, 192, 192, 1)',
-								'rgba(153, 102, 255, 1)',
-								'rgba(255, 159, 64, 1)'
-							],
-							borderWidth: 1
-						}]
-					},
-					options: {
-						scales: {
-							y: {
-								beginAtZero: true
-							}
-						}
-					}
-				});
-			</script>
+	
+	<div class="grid-x grid-margin-x">
+		<div class="cell large-auto">
+			<button id = "prevButton" onclick = "ChangePagePrev()" class="button">&laquo; Previous  </button>
 		</div>
+		<div class="cell large-auto ">
+			<button id = "nextButton" onclick = "ChangePageNext()" class="button "> Next  &raquo; </button>
+		</div>
+	</div>
 
+	<div class="grid-x grid-margin-x">
+		<div id = "tablecontent" class="cell large-auto">
+			<img id="img" src="%%MFR_IMAGE%%" alt="%%MFR_ALT_TEXT%%" width="500"/>
+			<h1 id = "title">%%TITLE%%</h1>
+			<h2 id = "year"> %%YEAR%% </h2>
+			<div class="table-scroll">
+				<table class ="hover">
+					<thead>
+						%%TABLE_HEADER%%
+					</thead>
+					<tbody>
+						%%BIRTH_INFO%%
+					</tbody>
+					
+				</table>
+			</div>
+		</div>
+		<div class="cell large-auto">
+			<div class="box inner-outline">
+				<canvas id="myChart" width="300" height="300"></canvas>
+			</div>
+		</div>
 	</div>
+	<script>
+		const ctx = document.getElementById('myChart').getContext('2d');
+		const myChart = new Chart(ctx, {
+			type: 'bar',
+			data: {
+				labels: [%%label_list%%],
+				datasets: [{
+					label: '# of births',
+					data: [%%data_list%%],
+					backgroundColor: [
+						'rgba(255, 99, 132, 0.2)',
+						'rgba(54, 162, 235, 0.2)',
+						'rgba(255, 206, 86, 0.2)',
+						'rgba(75, 192, 192, 0.2)',
+						'rgba(153, 102, 255, 0.2)',
+						'rgba(255, 159, 64, 0.2)'
+					],
+					borderColor: [
+						'rgba(255, 99, 132, 1)',
+						'rgba(54, 162, 235, 1)',
+						'rgba(255, 206, 86, 1)',
+						'rgba(75, 192, 192, 1)',
+						'rgba(153, 102, 255, 1)',
+						'rgba(255, 159, 64, 1)'
+					],
+					borderWidth: 1
+				}]
+			},
+			options: {
+				scales: {
+					y: {
+						beginAtZero: true
+					}
+				}
+			}
+		});
+	</script>
+
+
+	
 
 
 </body>
