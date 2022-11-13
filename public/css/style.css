@@ -176,3 +176,7 @@ div{
     outline: 10px solid #048BA8;
     outline-offset: 20px;
     }
+
+#myChart{
+    margin-top: 300px;
+}

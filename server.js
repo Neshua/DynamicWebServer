@@ -93,8 +93,10 @@ app.get('/year/:selected_year', (req, res) => {
 
 // outputs the amount of births in that month throughout the 14 years (ex april in 2000-2014)
 app.get('/month/:selected_month', (req, res) => {
-    let month = req.params.selected_month.toLowerCase();
-    let monthList = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"];
+    // let month = req.params.selected_month.toLowerCase();
+    let month = req.params.selected_month;
+    month = month[0].toUpperCase() + month.substring(1, month.length)
+    let monthList = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     let month_number = parseInt(monthList.indexOf(month) + 1);
     console.log(month);
     console.log(month_number);
