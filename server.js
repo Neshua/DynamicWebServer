@@ -95,16 +95,16 @@ app.get('/year/:selected_year', (req, res) => {
 app.get('/month/:selected_month', (req, res) => {
     let month = req.params.selected_month.toLowerCase();
     let monthList = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"];
-    let month_number = monthList.indexOf(month) + 1;
+    let month_number = parseInt(monthList.indexOf(month) + 1);
     console.log(month);
     console.log(month_number);
     
     fs.readFile(path.join(template_dir, 'births_template.html'), (err, template) => {
-        let queryMonth = "SELECT * FROM Births WHERE Births.month = ?";
-        db.all(queryMonth, [month_number], (err, rows) => {
+        let query = "SELECT * FROM Births WHERE Births.monthNum = ?";
+        db.all(query, [month_number], (err, rows) => {
             let response = template.toString();
             response = response.replace('%%TITLE%%', 'Sum of all US births in');
-            response = response.replace('%%%YEAR%','' + month +  ' from 2000-2014');
+            response = response.replace('%%YEAR%%',  " " + month +  ' from 2000-2014');
             let birth_number = 0;
             let year = 2000;
             let birth_data = "";
@@ -114,7 +114,7 @@ app.get('/month/:selected_month', (req, res) => {
             for(let i = 0; i < rows.length; i++){
                 if (i === (rows.length-1) || rows[i].year !== year) {
                     if(i === rows.length-1) {
-                        xlabels += month.toString();
+                        xlabels += year.toString();
                         birth_number += rows[i].births;
                         data += birth_number.toString();
                     } else {

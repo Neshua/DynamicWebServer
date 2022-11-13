@@ -12,6 +12,8 @@
 			let year = 0;
 			let day = "";
 			let week = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+			let monthName = "";
+			let monthList = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"];
 			if (window.location.pathname.includes('year')) {
 				year = parseInt(window.location.pathname.substring(6, 10));
 				year += 1;
@@ -29,10 +31,21 @@
 				}
 				window.location.href = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/day/" + week[index];
 			}
+			if (window.location.pathname.includes('month')) {
+				monthName = window.location.pathname.substring(7, window.location.pathname.length);
+				monthName = monthName.toLowerCase();
+				let index = monthList.indexOf(monthName) + 1;
+				if (index === monthList.length) {
+					index = 0;
+				}
+				window.location.href = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/month/" + monthList[index];
+			}
 		}
 		function ChangePagePrev() {
 			let year = 0;
 			let day = "";
+			let monthName = "";
+			let monthList = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"];
 			let week = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 			if (window.location.pathname.includes('year')) {
 				year = parseInt(window.location.pathname.substring(6, 10));
@@ -50,6 +63,15 @@
 				}
 				window.location.href = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/day/" + week[index];
 			}
+			if (window.location.pathname.includes('month')) {
+				monthName = window.location.pathname.substring(7, window.location.pathname.length);
+				monthName = monthName.toLowerCase();
+				let index = monthList.indexOf(monthName) - 1;
+				if (index < 0) {
+					index = 11;
+				}
+				window.location.href = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/month/" + monthList[index];
+			}
 		}
 	</script>
 </head>
@@ -57,7 +79,7 @@
 	<div class = "header"> US Births
 		<div>
 			<a href="http://localhost:8000/year/2000">Filter by Year</a>
-			<a href="http://localhost:8000/year/2003">Filter by Month</a>
+			<a href="http://localhost:8000/month/april">Filter by Month</a>
 			<a href="http://localhost:8000/day/monday">Filter by Day</a>
 		</div>
 	</div>
