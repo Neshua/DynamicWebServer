@@ -56,7 +56,7 @@
 <body>
 	<div class = "header"> US Births
 		<div>
-			<a href="http://localhost:8000/year/2002">Filter by Year</a>
+			<a href="http://localhost:8000/year/2000">Filter by Year</a>
 			<a href="http://localhost:8000/year/2003">Filter by Month</a>
 			<a href="http://localhost:8000/day/monday">Filter by Day</a>
 		</div>
@@ -64,17 +64,13 @@
 	<a onclick="ChangePagePrev()" id="previous">&raquo;Previous</a>
 	<a onclick="ChangePageNext()" id="next">Next &raquo;</a>
 	<div id = "content">
+		<img id="img" src="%%MFR_IMAGE%%" alt="%%MFR_ALT_TEXT%%" width="500"/>
 		<h1 id = "Title">%%TITLE%%</h1>
 		<h2 id = "year"> %%YEAR%% </h2>
 		<div class="table-scroll">
 			<table class ="hover">
 				<thead>
 					%%TABLE_HEADER%%
-<!--					<tr>-->
-<!--						<th>Date of the Month</th>-->
-<!--						<th>Day of the Week</th>-->
-<!--						<th>Number of Births</th>-->
-<!--					</tr>-->
 				</thead>
 				<tbody>
 					%%BIRTH_INFO%%

@@ -77,6 +77,7 @@ app.get('/year/:selected_year', (req, res) => {
                 }
             }
             table_head = "<tr>"+ "<th>" +"Month Number of the Year"+"</th>"+ "<th>" +"Sum of Births"+"</th>" + "</tr>";
+            response = response.replace("%%MFR_IMAGE%%", "/images/" + "year.png");
             response = response.replace("%%TABLE_HEADER%%", table_head);
             response = response.replace("%%data_list%%", data);
             response = response.replace("%%label_list%%", xlabels);
@@ -144,6 +145,7 @@ app.get('/day/:selected_day', (req, res) => {
                 }
             }
             table_head = "<tr>"+ "<th>" +"Year"+"</th>"+ "<th>" +"Sum of Births"+"</th>" + "</tr>";
+            response = response.replace("%%MFR_IMAGE%%", "/images/" + "week.png");
             response = response.replace("%%TABLE_HEADER%%", table_head);
             response = response.replace("%%data_list%%", data);
             response = response.replace("%%label_list%%", xlabels);
