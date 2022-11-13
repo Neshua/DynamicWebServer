@@ -48,7 +48,7 @@ app.get('/year/:selected_year', (req, res) => {
         let query = "SELECT * FROM Births WHERE Births.year = ?";
         db.all(query, [year], (err, rows) => {
             let response = template.toString();
-            response = response.replace('%%TITLE%%', "Data of every month for year:");
+            response = response.replace('%%TITLE%%', "Sum of all US Births for every month in");
             response = response.replace('%%YEAR%%', year);
             let month = 1;
             let birth_number = 0;
@@ -156,7 +156,7 @@ app.get('/day/:selected_day', (req, res) => {
         db.all(query, [day], (err, rows) => {
             //console.log(rows);
             let response = template.toString();
-            response = response.replace('%%TITLE%%', "Sum of births on:");
+            response = response.replace('%%TITLE%%', "Sum of all US births on");
             response = response.replace('%%YEAR%%', day + "'s from 2000-2014");
             let birth_number = 0;
             let year = 2000;
