@@ -33,8 +33,7 @@
 			}
 			if (window.location.pathname.includes('month')) {
 				monthName = window.location.pathname.substring(7, window.location.pathname.length);
-				monthName = monthName.toLowerCase();
-				let index = monthList.indexOf(monthName) + 1;
+				let index = monthList.indexOf(monthName.toString()) + 1;
 				if (index === monthList.length) {
 					index = 0;
 				}
@@ -65,8 +64,7 @@
 			}
 			if (window.location.pathname.includes('month')) {
 				monthName = window.location.pathname.substring(7, window.location.pathname.length);
-				monthName = monthName.toLowerCase();
-				let index = monthList.indexOf(monthName) - 1;
+				let index = monthList.indexOf(monthName.toString()) - 1;
 				if (index < 0) {
 					index = 11;
 				}
@@ -81,22 +79,13 @@
 		}
 
 		function redirectMonthFilter(){
-			var url ="http://localhost:8000/month/april";
+			var url ="http://localhost:8000/month/January";
     		window.location.href = url;
 		}
 
 		function redirectDayFilter(){
 			var url ="http://localhost:8000/day/monday";
     		window.location.href = url;
-			if (window.location.pathname.includes('month')) {
-				monthName = window.location.pathname.substring(7, window.location.pathname.length);
-				monthName = monthName.toLowerCase();
-				let index = monthList.indexOf(monthName) - 1;
-				if (index < 0) {
-					index = 11;
-				}
-				window.location.href = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/month/" + monthList[index];
-			}
 		}
 	</script>
 </head>
